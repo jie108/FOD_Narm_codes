@@ -1,0 +1,46 @@
+-main files:
+ * classo_DWI.py: running script for FOD estimation (either for simulation or real data)
+ 
+
+-supporting files for methods: 
+* DWI_weight.py: functions to caclualte adaptive weights for the smoothing scheme 
+* FOD_peak.py: peak detection functions
+* real_data.py: nonlinear regression estimator for single tensor model 
+
+- functions to generate components of the design matrix X  and equal angle evaluation mesh:
+*sphere_harmonics.py:  spherical harmonics evaluation, give \Phi and R 
+
+*sphere_mesh:  generate a simple triangulation (icosphere), migrated from matlab package "toolbox_wavelet_meshes" by Gabriel Peyre; J=5, 2562 grid points 
+
+*sphere_needlets: needlets functions, gives the C matrix (transition matrix); 
+
+design matrix X = \Phi R C 
+
+-cython related files and commands:
+*setup.py:
+*pyclasso.pyx: classo.c python wrapper, used in setup.py
+
+-- in setup.py: Cython compiles .pyx file to .c file, C complier compiles .c file to .so file (can be imported into Python session):
+-- in command line, run the following:
+
+```bash
+python setup.py build_ext --inplace
+```
+-- in classo_DWI.py: from pyclasso import SN_CLasso  ## defined in pyclasso.pyx, a wrapper function to the sn_classo in classo.c file
+
+-simulation related files: 
+* example_region.py: generate necessary components for FOD fitting in simulation: these components (such as design matrix and constraints matrix, etc.) are used in classo_DWI.py
+* simu_region.py: generate DWI data  for simulation
+* eval_region.py: evaluate results of simulation study
+* plot_region.m: plot estimated FOD 
+
+
+
+- real data related files: 
+*example_HCP.py: load data and generate necessary components for FOD estimation, inputs for classo_DWI.py
+*example_ADNI.py: 
+
+
+
+
+
